@@ -1,0 +1,62 @@
+package engine;
+
+import general.XmlHolder;
+import org.xml.sax.SAXException;
+import stanford.SentenceParser;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+
+/**
+ * Created by Erik on 31.10.2016.
+ */
+public class MainEngine {
+
+    String inputFile;
+    String outXmlFile;
+
+    public MainEngine(String inputFile, String outXmlFile){
+        this.inputFile = inputFile;
+        this.outXmlFile = outXmlFile;
+    }
+
+    public void startParse(){
+
+        SentenceParser stp = new SentenceParser();
+        XmlHolder xmlHolder;
+
+        try {
+            stp.parseText(this.inputFile,this.outXmlFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Stanford parser burned down");
+            System.exit(4);
+        }
+        xmlHolder = this.makeXmlHolder(this.outXmlFile);
+        System.out.println("xml root: " + xmlHolder.getRoot());
+
+
+    }
+
+    protected XmlHolder makeXmlHolder(String xmlFile){
+        XmlHolder xmlHolder = null;
+        try {
+            xmlHolder = new XmlHolder(xmlFile);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+            System.out.println("xml parser configuration broken");
+            System.exit(1);
+        } catch (SAXException e) {
+            e.printStackTrace();
+            System.out.println("xml SAX exception. Wait what?");
+            System.exit(2);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("xmlHolder IO excpetion. You do have the file right?");
+            System.exit(3);
+        }
+
+        return xmlHolder;
+    }
+
+}
