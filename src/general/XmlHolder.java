@@ -48,12 +48,15 @@ public class XmlHolder {
 
 
         NodeList sents = this.xmlDoc.getElementsByTagName("sentence");
-        for(i =0; i< sents.getLength()/2; i++){
+        System.out.println(sents.getLength());
+        for(i =0; i< sents.getLength(); i++){
             sentence = sents.item(i);
             sentenceComponents = sentence.getChildNodes();
 
             tokens = this.findNode(sentenceComponents, "tokens");
-
+            if(tokens == null){
+                continue;
+            }
             words = tokens.getChildNodes();
             sentences.add(this.pickWords(words));
 
@@ -75,7 +78,7 @@ public class XmlHolder {
             tempNode = words.item(j);
             if(tempNode.getNodeName() == this.WORD_NAME){
                 Element element = (Element) tempNode;
-                name = element.getElementsByTagName("lemma").item(0).getTextContent();
+                name = element.getElementsByTagName("word").item(0).getTextContent();
                 wordType = element.getElementsByTagName("NER").item(0).getTextContent();
                 word = new SentenceObject(name, wordType);
                 word.position = element.getElementsByTagName("POS").item(0).getTextContent();
