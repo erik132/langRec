@@ -1,5 +1,6 @@
 package engine;
 
+import database.EntityHolder;
 import general.XmlHolder;
 import org.xml.sax.SAXException;
 import stanford.SentenceParser;
@@ -12,8 +13,11 @@ import java.io.IOException;
  */
 public class MainEngine {
 
-    String inputFile;
-    String outXmlFile;
+    private String inputFile;
+    private String outXmlFile;
+    private EntityHolder entityHolder;
+
+
 
     public MainEngine(String inputFile, String outXmlFile){
         this.inputFile = inputFile;
@@ -34,6 +38,9 @@ public class MainEngine {
         }
         xmlHolder = this.makeXmlHolder(this.outXmlFile);
         System.out.println("xml root: " + xmlHolder.getRoot());
+        entityHolder = new EntityHolder(xmlHolder);
+        entityHolder.readXml();
+
 
 
     }
