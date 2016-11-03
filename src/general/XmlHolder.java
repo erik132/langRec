@@ -82,6 +82,7 @@ public class XmlHolder {
                 wordType = element.getElementsByTagName("NER").item(0).getTextContent();
                 word = new SentenceObject(name, wordType);
                 word.position = element.getElementsByTagName("POS").item(0).getTextContent();
+                word.lemma = element.getElementsByTagName("lemma").item(0).getTextContent();
                 sentence.addWord(word);
             }
         }

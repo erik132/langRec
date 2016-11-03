@@ -22,7 +22,7 @@ public class SentenceChain extends ArrayList<SentenceObject>{
         String result = "";
 
         for(SentenceObject word: this){
-            result += word.name + " : ";
+            result += word.name + "(" + word.wordType + ") ";
         }
         return result;
     }

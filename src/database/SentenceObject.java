@@ -8,6 +8,7 @@ public class SentenceObject {
     public String name;
     public String wordType;
     public String position;
+    public String lemma;
 
     public SentenceObject(String name, String wordType){
         this.name = name;
