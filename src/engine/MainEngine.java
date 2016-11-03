@@ -37,9 +37,10 @@ public class MainEngine {
             System.exit(4);
         }
         xmlHolder = this.makeXmlHolder(this.outXmlFile);
-        System.out.println("xml root: " + xmlHolder.getRoot());
         entityHolder = new EntityHolder(xmlHolder);
         entityHolder.readXml();
+        entityHolder.unifyNames();
+        System.out.println(entityHolder.toString());
 
 
 
