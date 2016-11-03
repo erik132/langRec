@@ -42,6 +42,7 @@ public class MainEngine {
         entityHolder.unifyNames();
         entityHolder.associateKeywords();
         entityHolder.associateMovieTypes();
+        entityHolder.cleanDoubleDeps();
         System.out.println(entityHolder.toString());
 
 

@@ -39,6 +39,47 @@ public class SentenceChain extends ArrayList<SentenceObject>{
         return result;
     }
 
+    public void cleanDeps(){
+        int i;
+
+        for(i=0; i<this.links.size(); i++){
+            if(this.links.get(i).governorId == this.links.get(i).targetId){
+                links.remove(i);
+                i--;
+            }
+        }
+    }
+
+    public void unifyDeps(int word1, int word2, String newWord){
+        word1++;
+        word2++;
+
+        for(ChainLink link: this.links){
+            if(link.governorId == word1 || link.governorId == word2){
+                link.governor = newWord;
+            }
+
+            if(link.targetId == word1 || link.targetId == word2){
+                link.target = newWord;
+            }
+
+            if(link.governorId == word2){
+                link.governorId = word1;
+            }
+
+            if(link.targetId == word2){
+                link.targetId = word1;
+            }
+
+            if(link.governorId > word2){
+                link.governorId--;
+            }
+            if(link.targetId > word2){
+                link.targetId--;
+            }
+        }
+    }
+
     @Override
     public String toString(){
         String result = "";

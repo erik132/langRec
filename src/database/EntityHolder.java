@@ -62,6 +62,7 @@ public class EntityHolder {
                 if(tempword.position.equals(Globals.ANY_NAME) && (j + 1) < sentence.size() && sentence.get(j+1).position.equals(Globals.ANY_NAME)){
                     tempword.name += " " + sentence.get(j+1).name;
                     tempword.unified = true;
+                    sentence.unifyDeps(j,j+1,tempword.name);
                     sentence.remove(j+1);
                     j--;
                 }
@@ -107,8 +108,9 @@ public class EntityHolder {
                             }
                             if(result && k>0){
                                 for(d=1; d<=k; d++){
-                                    tempword.name += " " + sentence.get(j + d).name;
-                                    sentence.remove(j + d);
+                                    tempword.name += " " + sentence.get(j + 1).name;
+                                    sentence.unifyDeps(j,j+1,tempword.name);
+                                    sentence.remove(j + 1);
                                 }
                             }
                         }
@@ -117,6 +119,12 @@ public class EntityHolder {
                     if(result) tempword.wordType = newType;
                 }
             }
+        }
+    }
+
+    public void cleanDoubleDeps(){
+        for(SentenceChain sentence: this.sentences){
+            sentence.cleanDeps();
         }
     }
 
