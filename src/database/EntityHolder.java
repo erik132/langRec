@@ -87,11 +87,11 @@ public class EntityHolder {
     }
 
     protected void associateType(String newType, List<String> matches, List<String> positions){
-        int i,j,k;
+        int i,j,k,d;
         SentenceChain sentence;
         SentenceObject tempword;
         boolean result = false;
-        
+
         for(i=0; i< sentences.size(); i++) {
             sentence = this.sentences.get(i);
 
@@ -104,6 +104,12 @@ public class EntityHolder {
                         for(k=0; k<parts.length; k++){
                             if((j+k >= sentence.size()) || !sentence.get(j+k).lemma.equals(parts[k])){
                                 result = false;
+                            }
+                            if(result && k>0){
+                                for(d=1; d<=k; d++){
+                                    tempword.name += " " + sentence.get(j + d).name;
+                                    sentence.remove(j + d);
+                                }
                             }
                         }
                         if(result) break;
