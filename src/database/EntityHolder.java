@@ -1,6 +1,8 @@
 package database;
 
 import com.sun.javafx.scene.control.GlobalMenuAdapter;
+import database.imdb.ImdbPerson;
+import database.imdb.ImdbSearcher;
 import general.Globals;
 import general.XmlHolder;
 
@@ -120,6 +122,49 @@ public class EntityHolder {
                 }
             }
         }
+    }
+
+    public void markMovieAreas(){
+        int i, keyword;
+        int minTarget = 9999, maxTarget = 0;
+        ChainLink tempLink;
+
+        for(SentenceChain sentence: this.sentences){
+            keyword = -1;
+            for(i=0; i<sentence.size(); i++){
+                if(this.movieKeywords.contains(sentence.get(i).lemma)){
+                    keyword = i;
+                    break;
+                }
+            }
+
+            for(i=0; i<sentence.linkLength(); i++){
+                tempLink = sentence.getLink(i);
+                if(tempLink.governorId() == i ){
+                    if(tempLink.targetId() < minTarget){
+                        minTarget = tempLink.targetId();
+                    }
+
+                }
+            }
+
+        }
+    }
+
+    public void searchForActors(){
+        List<ImdbPerson> people = new ArrayList<>();
+        for(SentenceChain sentence: this.sentences){
+            for(SentenceObject word: sentence){
+                if(word.wordType.equals(Globals.PERSON)){
+                    people.add(new ImdbPerson(word.name));
+                }
+            }
+        }
+
+        ImdbSearcher searcher = new ImdbSearcher(people);
+        searcher.findData();
+        System.out.println(searcher.toString());
+
     }
 
     public void cleanDoubleDeps(){

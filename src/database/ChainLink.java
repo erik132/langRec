@@ -11,5 +11,11 @@ public class ChainLink {
     public int governorId;
     public int targetId;
 
+    public int governorId(){
+        return this.governorId - 1;
+    }
 
+    public int targetId(){
+        return this.targetId - 1;
+    }
 }

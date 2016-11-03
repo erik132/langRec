@@ -22,12 +22,16 @@ public class SentenceChain extends ArrayList<SentenceObject>{
         this.links.add(link);
     }
 
-    public int getLinkLength(){
+    public int linkLength(){
         return this.links.size();
     }
 
     public void removeLink(int index){
         this.links.remove(index);
+    }
+
+    public ChainLink getLink(int i){
+        return this.links.get(i);
     }
 
     public String printLinks(){

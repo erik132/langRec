@@ -44,6 +44,7 @@ public class MainEngine {
         entityHolder.associateMovieTypes();
         entityHolder.cleanDoubleDeps();
         System.out.println(entityHolder.toString());
+        entityHolder.searchForActors();
 
 
 
