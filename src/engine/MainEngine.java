@@ -40,6 +40,7 @@ public class MainEngine {
         entityHolder = new EntityHolder(xmlHolder);
         entityHolder.readXml();
         entityHolder.unifyNames();
+        entityHolder.associateKeywords();
         entityHolder.associateMovieTypes();
         System.out.println(entityHolder.toString());
 

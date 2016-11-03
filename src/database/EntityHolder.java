@@ -16,6 +16,7 @@ public class EntityHolder {
 
     List<SentenceObject> words;
     List<String> movieTypes;
+    List<String> movieKeywords;
 
     XmlHolder xmlHolder;
 
@@ -25,6 +26,7 @@ public class EntityHolder {
         this.xmlHolder = xmls;
 
         this.populateMovietypes();
+        this.populateMovieKeywords();
     }
 
     private void populateMovietypes(){
@@ -32,6 +34,13 @@ public class EntityHolder {
         this.movieTypes.add(Globals.THRILLER);
         this.movieTypes.add(Globals.COMEDY);
         this.movieTypes.add(Globals.SCIENCE_FICTION);
+    }
+
+    private void populateMovieKeywords(){
+        this.movieKeywords = new ArrayList<String>();
+        this.movieKeywords.add(Globals.DIRECT);
+        this.movieKeywords.add(Globals.ACT);
+        this.movieKeywords.add(Globals.PLAY);
     }
 
     public void readXml(){
@@ -52,6 +61,7 @@ public class EntityHolder {
                 tempword = sentence.get(j);
                 if(tempword.position.equals(Globals.ANY_NAME) && (j + 1) < sentence.size() && sentence.get(j+1).position.equals(Globals.ANY_NAME)){
                     tempword.name += " " + sentence.get(j+1).name;
+                    tempword.unified = true;
                     sentence.remove(j+1);
                     j--;
                 }
@@ -64,19 +74,32 @@ public class EntityHolder {
     }
 
     public void associateMovieTypes(){
+        List<String> positions = new ArrayList<String>();
+        positions.add(Globals.NOUN);
+        this.associateType(Globals.MOVIE_TYPE, this.movieTypes, positions);
+    }
+
+    public void associateKeywords(){
+        List<String> positions = new ArrayList<String>();
+        positions.add(Globals.VERB1);
+        positions.add(Globals.VERB2);
+        this.associateType(Globals.INTERACTION_KEYWORD, this.movieKeywords, positions);
+    }
+
+    protected void associateType(String newType, List<String> matches, List<String> positions){
         int i,j,k;
         SentenceChain sentence;
         SentenceObject tempword;
         boolean result = false;
-
+        
         for(i=0; i< sentences.size(); i++) {
             sentence = this.sentences.get(i);
 
             for(j=0; j<sentence.size(); j++){
                 tempword = sentence.get(j);
-                if(tempword.position.equals(Globals.NOUN)){
-                    for(String movieType: this.movieTypes){
-                        String[] parts = movieType.split(" ");
+                if(positions.contains(tempword.position)){
+                    for(String compType: matches){
+                        String[] parts = compType.split(" ");
                         result = true;
                         for(k=0; k<parts.length; k++){
                             if((j+k >= sentence.size()) || !sentence.get(j+k).lemma.equals(parts[k])){
@@ -85,7 +108,7 @@ public class EntityHolder {
                         }
                         if(result) break;
                     }
-                    if(result) tempword.wordType = Globals.MOVIE_TYPE;
+                    if(result) tempword.wordType = newType;
                 }
             }
         }

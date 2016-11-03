@@ -8,6 +8,8 @@ public class Globals {
     public static final String PERSON = "PERSON";
     public static final String ANY_NAME = "NNP";
     public static final String NOUN = "NN";
+    public static final String VERB1 = "VBG";
+    public static final String VERB2 = "VBN";
 
     public static final String MOVIE = "MOVIE";
     public static final String DIRECT = "direct";
