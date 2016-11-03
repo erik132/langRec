@@ -21,7 +21,7 @@ public class ImdbSearcher {
         this.people = people;
     }
 
-    public void findData(){
+    public List<ImdbPerson> findData(){
         String url = "http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q=:--:";
         String tempName;
         System.out.println("finding data for " + this.people.size() + " people");
@@ -37,6 +37,7 @@ public class ImdbSearcher {
                 System.out.println("request failed");
             }
         }
+        return this.people;
     }
 
     protected String makeRequest(String url) throws IOException {
@@ -48,7 +49,6 @@ public class ImdbSearcher {
         con.setRequestProperty("User-Agent", USER_AGENT);
 
         int responseCode = con.getResponseCode();
-        System.out.println("the response code: " + responseCode);
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));

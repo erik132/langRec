@@ -45,6 +45,8 @@ public class MainEngine {
         entityHolder.cleanDoubleDeps();
         System.out.println(entityHolder.toString());
         entityHolder.searchForActors();
+        entityHolder.cleanupSentences();
+        System.out.println(entityHolder.printSentences());
 
 
 

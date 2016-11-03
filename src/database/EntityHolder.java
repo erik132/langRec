@@ -73,7 +73,16 @@ public class EntityHolder {
     }
 
     public void cleanupSentences(){
+        int i;
 
+        for(SentenceChain sentence: this.sentences){
+            for(i=0; i<sentence.size(); i++){
+                if(sentence.get(i).wordType.equals("O")) {
+                    sentence.remove(i);
+                    i--;
+                }
+            }
+        }
     }
 
     public void associateMovieTypes(){
@@ -153,17 +162,27 @@ public class EntityHolder {
 
     public void searchForActors(){
         List<ImdbPerson> people = new ArrayList<>();
-        for(SentenceChain sentence: this.sentences){
-            for(SentenceObject word: sentence){
-                if(word.wordType.equals(Globals.PERSON)){
-                    people.add(new ImdbPerson(word.name));
+        int i,j;
+        SentenceObject tempWord;
+
+        for(i=0; i<this.sentences.size(); i++){
+            for(j=0; j<this.sentences.get(i).size(); j++){
+                tempWord = this.sentences.get(i).get(j);
+                if(tempWord.wordType.equals(Globals.PERSON)){
+                    people.add(new ImdbPerson(tempWord.name,i,j));
                 }
             }
         }
 
         ImdbSearcher searcher = new ImdbSearcher(people);
-        searcher.findData();
-        System.out.println(searcher.toString());
+        people = searcher.findData();
+        for(ImdbPerson person: people){
+            if(person.roles.size() > 0) {
+                this.sentences.get(person.x).get(person.y).wordType = person.roles.get(0);
+            }
+        }
+
+        //System.out.println(searcher.toString());
 
     }
 
@@ -173,8 +192,16 @@ public class EntityHolder {
         }
     }
 
+    public String printSentences(){
+        String result = "";
 
+        for(SentenceChain sentence: this.sentences){
+            result += sentence.toString() + "\n";
+        }
+        return result;
+    }
 
+    @Override
     public String toString(){
         String result = "";
 

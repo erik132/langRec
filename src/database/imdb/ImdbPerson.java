@@ -13,12 +13,18 @@ public class ImdbPerson {
     public String name;
     public String type;
 
+    public int x;
+    public int y;
+
     public String imdbResponse;
     public List<String> movies;
     public List<String> roles;
 
-    public ImdbPerson(String name){
+    public ImdbPerson(String name, int x, int y){
         this.name = name;
+        this.x = x;
+        this.y = y;
+
         this.movies = new ArrayList<>();
         this.roles = new ArrayList<>();
     }
@@ -27,10 +33,6 @@ public class ImdbPerson {
         int i;
         JSONObject tempjson;
         String tempString[];
-
-        /*this.imdbResponse = this.imdbResponse.replace("name_exact", "name_x");
-        this.imdbResponse = this.imdbResponse.replace("name_popular", "name_x");
-        this.imdbResponse = this.imdbResponse.replace("name_approx", "name_x");*/
 
         JSONObject obj = new JSONObject(this.imdbResponse);
 
