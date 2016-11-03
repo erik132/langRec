@@ -127,6 +127,7 @@ public class EntityHolder {
 
         for(SentenceChain sentence: this.sentences){
             result += sentence.toString() + "\n";
+            result += sentence.printLinks();
         }
         return result;
     }

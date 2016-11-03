@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 
+import database.ChainLink;
 import database.SentenceChain;
 import database.SentenceObject;
 import org.w3c.dom.Document;
@@ -24,6 +25,7 @@ public class XmlHolder {
     private Document xmlDoc;
 
     private String WORD_NAME = "token";
+    private String DEP_NAME = "dep";
 
     public XmlHolder(String fileName) throws ParserConfigurationException, IOException, SAXException {
         File inputFile = new File(fileName);
@@ -40,11 +42,14 @@ public class XmlHolder {
 
     public List<SentenceChain> getSentences(){
         List<SentenceChain> sentences = new ArrayList<SentenceChain>();
+        SentenceChain tempSentence;
         int i;
         NodeList words;
         NodeList sentenceComponents;
+        NodeList deps;
         Node sentence;
         Node tokens;
+        Node dependencyMain;
 
 
         NodeList sents = this.xmlDoc.getElementsByTagName("sentence");
@@ -58,7 +63,15 @@ public class XmlHolder {
                 continue;
             }
             words = tokens.getChildNodes();
-            sentences.add(this.pickWords(words));
+            tempSentence = this.pickWords(words);
+            sentences.add(tempSentence);
+
+            dependencyMain = this.findNode(sentenceComponents, "dependencies");
+            if(dependencyMain == null){
+                continue;
+            }
+            deps = dependencyMain.getChildNodes();
+            this.populateDeps(deps,tempSentence);
 
         }
 
@@ -88,6 +101,29 @@ public class XmlHolder {
         }
 
         return sentence;
+    }
+
+    protected void populateDeps(NodeList deps, SentenceChain sentence){
+        int j;
+        Node tempNode, tempnode2;
+        ChainLink link;
+
+        for(j=0; j <deps.getLength(); j++){
+            tempNode = deps.item(j);
+            if(tempNode.getNodeName() == this.DEP_NAME){
+                Element element = (Element) tempNode;
+                link = new ChainLink();
+                tempnode2 = element.getElementsByTagName("governor").item(0);
+                link.governor = tempnode2.getTextContent();
+                link.governorId = Integer.parseInt(tempnode2.getAttributes().getNamedItem("idx").getNodeValue());
+
+                tempnode2 = element.getElementsByTagName("dependent").item(0);
+                link.target = tempnode2.getTextContent();
+                link.targetId = Integer.parseInt(tempnode2.getAttributes().getNamedItem("idx").getNodeValue());
+                sentence.addChainLink(link);
+            }
+        }
+
     }
 
     protected Node findNode(NodeList nodes,String node){
