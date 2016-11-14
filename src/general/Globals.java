@@ -19,6 +19,7 @@ public class Globals {
 
     public static final String INTERACTION_KEYWORD = "MOVIE_INTERACTION";
 
+    public static final String MOVIE_WORD = "movie";
     public static final String MOVIE_TYPE = "MOVIE_TYPE";
     public static final String THRILLER = "thriller";
     public static final String COMEDY = "comedy";

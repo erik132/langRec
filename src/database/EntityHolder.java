@@ -43,6 +43,8 @@ public class EntityHolder {
         this.movieKeywords.add(Globals.DIRECT);
         this.movieKeywords.add(Globals.ACT);
         this.movieKeywords.add(Globals.PLAY);
+        this.movieKeywords.add(Globals.MOVIE_WORD);
+
     }
 
     public void readXml(){
@@ -95,6 +97,7 @@ public class EntityHolder {
         List<String> positions = new ArrayList<String>();
         positions.add(Globals.VERB1);
         positions.add(Globals.VERB2);
+        positions.add(Globals.NOUN);
         this.associateType(Globals.INTERACTION_KEYWORD, this.movieKeywords, positions);
     }
 
@@ -146,7 +149,9 @@ public class EntityHolder {
                     break;
                 }
             }
-
+            if(keyword == -1){
+                continue;
+            }
             for(i=0; i<sentence.linkLength(); i++){
                 tempLink = sentence.getLink(i);
                 if(tempLink.governorId() == i ){
