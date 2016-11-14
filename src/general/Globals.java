@@ -16,6 +16,7 @@ public class Globals {
     public static final String DIRECT = "direct";
     public static final String PLAY = "play";
     public static final String ACT = "act";
+    public static final String STAR = "star";
 
     public static final String INTERACTION_KEYWORD = "MOVIE_INTERACTION";
 

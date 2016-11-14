@@ -20,6 +20,10 @@ public class ImdbPerson {
     public List<String> movies;
     public List<String> roles;
 
+    public ImdbPerson(String name){
+        this(name,0,0);
+    }
+
     public ImdbPerson(String name, int x, int y){
         this.name = name;
         this.x = x;

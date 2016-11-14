@@ -44,6 +44,7 @@ public class EntityHolder {
         this.movieKeywords.add(Globals.ACT);
         this.movieKeywords.add(Globals.PLAY);
         this.movieKeywords.add(Globals.MOVIE_WORD);
+        this.movieKeywords.add(Globals.STAR);
 
     }
 
@@ -141,6 +142,8 @@ public class EntityHolder {
         int minTarget = 9999, maxTarget = 0;
         ChainLink tempLink;
 
+
+
         for(SentenceChain sentence: this.sentences){
             keyword = -1;
             for(i=0; i<sentence.size(); i++){
@@ -150,16 +153,28 @@ public class EntityHolder {
                 }
             }
             if(keyword == -1){
-                continue;
+                for(i=0; i<sentence.size(); i++){
+                    if(this.movieTypes.contains(sentence.get(i).lemma)){
+                        keyword = i;
+                        break;
+                    }
+                }
+                if(keyword == -1){
+                    continue;
+                }
             }
+            System.out.println("keyword is at: " + keyword);
             for(i=0; i<sentence.linkLength(); i++){
                 tempLink = sentence.getLink(i);
-                if(tempLink.governorId() == i ){
+                if(tempLink.governorId() == keyword ){
                     if(tempLink.targetId() < minTarget){
                         minTarget = tempLink.targetId();
                     }
 
                 }
+            }
+            if(minTarget != 9999){
+                sentence.get(minTarget).wordType = Globals.MOVIE;
             }
 
         }

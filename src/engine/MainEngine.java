@@ -43,6 +43,7 @@ public class MainEngine {
         entityHolder.associateKeywords();
         entityHolder.associateMovieTypes();
         entityHolder.cleanDoubleDeps();
+        entityHolder.markMovieAreas();
         System.out.println(entityHolder.toString());
         //entityHolder.searchForActors();
         //entityHolder.cleanupSentences();
