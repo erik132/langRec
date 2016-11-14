@@ -98,6 +98,7 @@ public class EntityHolder {
         List<String> positions = new ArrayList<String>();
         positions.add(Globals.VERB1);
         positions.add(Globals.VERB2);
+        positions.add(Globals.VERB3);
         positions.add(Globals.NOUN);
         this.associateType(Globals.INTERACTION_KEYWORD, this.movieKeywords, positions);
     }
@@ -147,14 +148,14 @@ public class EntityHolder {
         for(SentenceChain sentence: this.sentences){
             keyword = -1;
             for(i=0; i<sentence.size(); i++){
-                if(this.movieKeywords.contains(sentence.get(i).lemma)){
+                if(this.movieKeywords.contains(sentence.get(i).lemma) && sentence.get(i).wordType.equals(Globals.INTERACTION_KEYWORD)){
                     keyword = i;
                     break;
                 }
             }
             if(keyword == -1){
                 for(i=0; i<sentence.size(); i++){
-                    if(this.movieTypes.contains(sentence.get(i).lemma)){
+                    if(this.movieTypes.contains(sentence.get(i).lemma) && sentence.get(i).wordType.equals(Globals.MOVIE_TYPE)){
                         keyword = i;
                         break;
                     }
@@ -167,14 +168,17 @@ public class EntityHolder {
             for(i=0; i<sentence.linkLength(); i++){
                 tempLink = sentence.getLink(i);
                 if(tempLink.governorId() == keyword ){
+                    //System.out.println("governor: " + tempLink.governor + " target: " + tempLink.target);
                     if(tempLink.targetId() < minTarget){
                         minTarget = tempLink.targetId();
+
                     }
 
                 }
             }
             if(minTarget != 9999){
                 sentence.get(minTarget).wordType = Globals.MOVIE;
+                minTarget = 9999;
             }
 
         }

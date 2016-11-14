@@ -10,6 +10,7 @@ public class Globals {
     public static final String NOUN = "NN";
     public static final String VERB1 = "VBG";
     public static final String VERB2 = "VBN";
+    public static final String VERB3 = "VBZ";
 
     public static final String MOVIE = "MOVIE";
     public static final String MOVIE_AREA = "MOVIE_AREA";
