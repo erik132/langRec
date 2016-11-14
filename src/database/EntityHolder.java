@@ -3,6 +3,7 @@ package database;
 import com.sun.javafx.scene.control.GlobalMenuAdapter;
 import database.imdb.ImdbPerson;
 import database.imdb.ImdbSearcher;
+import database.triplets.WordProps;
 import general.Globals;
 import general.XmlHolder;
 
@@ -16,7 +17,7 @@ public class EntityHolder {
 
     List<SentenceChain> sentences;
 
-    List<SentenceObject> words;
+    List<WordProps> wordTriplets;
     List<String> movieTypes;
     List<String> movieKeywords;
 
@@ -24,7 +25,7 @@ public class EntityHolder {
 
     public EntityHolder(XmlHolder xmls){
         this.sentences = new ArrayList<SentenceChain>();
-        this.words = new ArrayList<SentenceObject>();
+        this.wordTriplets = new ArrayList<>();
         this.xmlHolder = xmls;
 
         this.populateMovietypes();
@@ -144,7 +145,6 @@ public class EntityHolder {
         ChainLink tempLink;
 
 
-
         for(SentenceChain sentence: this.sentences){
             keyword = -1;
             for(i=0; i<sentence.size(); i++){
@@ -168,7 +168,6 @@ public class EntityHolder {
             for(i=0; i<sentence.linkLength(); i++){
                 tempLink = sentence.getLink(i);
                 if(tempLink.governorId() == keyword ){
-                    //System.out.println("governor: " + tempLink.governor + " target: " + tempLink.target);
                     if(tempLink.targetId() < minTarget){
                         minTarget = tempLink.targetId();
 
@@ -182,6 +181,39 @@ public class EntityHolder {
             }
 
         }
+    }
+
+    public void makeTriplets(){
+        int i;
+        SentenceObject tempword;
+
+        for(SentenceChain sentence: this.sentences){
+            for(i=0; i<sentence.size(); i++){
+                tempword = sentence.get(i);
+                if(!tempword.wordType.equals("O")){
+                    if(tempword.wordType.equals(Globals.INTERACTION_KEYWORD) || tempword.wordType.equals(Globals.MOVIE_TYPE)) {
+                        this.wordTriplets.add(new WordProps(tempword.lemma, tempword.wordType));
+                    }else{
+                        this.wordTriplets.add(new WordProps(tempword.name, tempword.wordType));
+                    }
+                }
+            }
+
+        }
+    }
+
+    public String printTriplets(){
+        String result = "";
+
+        for(WordProps wordProps: this.wordTriplets){
+            result += wordProps.toString() + "\n";
+        }
+
+        return result;
+    }
+
+    public void unifyTriplets(){
+
     }
 
     public void searchForActors(){

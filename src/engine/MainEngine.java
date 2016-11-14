@@ -44,10 +44,12 @@ public class MainEngine {
         entityHolder.associateMovieTypes();
         entityHolder.cleanDoubleDeps();
         entityHolder.markMovieAreas();
+        entityHolder.makeTriplets();
         System.out.println(entityHolder.toString());
         //entityHolder.searchForActors();
         //entityHolder.cleanupSentences();
         System.out.println(entityHolder.printSentences());
+        System.out.println(entityHolder.printTriplets());
 
 
 
