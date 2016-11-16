@@ -302,26 +302,23 @@ public class EntityHolder {
     public void searchForActors(){
         List<ImdbPerson> people = new ArrayList<>();
         int i,j;
-        SentenceObject tempWord;
-
-        for(i=0; i<this.sentences.size(); i++){
-            for(j=0; j<this.sentences.get(i).size(); j++){
-                tempWord = this.sentences.get(i).get(j);
-                if(tempWord.wordType.equals(Globals.PERSON)){
-                    people.add(new ImdbPerson(tempWord.name,i,j));
-                }
+        WordProps tempTriplet;
+        
+        for(WordProps triplet: this.wordTriplets) {
+            if(triplet.get(0).value().equals(Globals.PERSON)) {
+                people.add(new ImdbPerson(triplet.word, triplet.x, triplet.y));
             }
         }
 
         ImdbSearcher searcher = new ImdbSearcher(people);
         people = searcher.findData();
         for(ImdbPerson person: people){
-            if(person.roles.size() > 0) {
-                this.sentences.get(person.x).get(person.y).wordType = person.roles.get(0);
+            tempTriplet = this.getTriplet(person.x,person.y);
+            for(i=0; i<person.roles.size(); i++){
+                tempTriplet.add(new WordProp(Globals.IMDB_ROLE + "_" + person.roles.get(i),person.movies.get(i)));
             }
-        }
 
-        //System.out.println(searcher.toString());
+        }
 
     }
 

@@ -47,7 +47,7 @@ public class MainEngine {
         entityHolder.makeTriplets();
         entityHolder.unifyTriplets();
         System.out.println(entityHolder.toString());
-        //entityHolder.searchForActors();
+        entityHolder.searchForActors();
         //entityHolder.cleanupSentences();
         System.out.println(entityHolder.printSentences());
         System.out.println(entityHolder.printTriplets());

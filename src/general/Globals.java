@@ -27,5 +27,7 @@ public class Globals {
     public static final String COMEDY = "comedy";
     public static final String SCIENCE_FICTION = "science fiction";
 
+    public static final String IMDB_ROLE = "IMDB";
+
     public static final String MAIN_TYPE = "mainType";
 }
