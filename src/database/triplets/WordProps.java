@@ -22,6 +22,21 @@ public class WordProps extends ArrayList<WordProp>{
         this.y = y;
     }
 
+    public void consumeWordProps(WordProps other){
+        for(WordProp prop: other){
+            if(!this.contains(prop)){
+                this.add(prop);
+            }
+        }
+    }
+
+    public boolean equals(WordProps other){
+        if(other.word.equals(this.word)){
+            return true;
+        }
+        return false;
+    }
+
     public boolean equals(int x, int y){
         if(this.x == x && this.y == y){
             return true;

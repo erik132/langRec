@@ -262,9 +262,6 @@ public class EntityHolder {
         return null;
     }
 
-    private void attachInteractions(SentenceChain sentence, SentenceObject keyword){
-
-    }
 
     public String printTriplets(){
         String result = "";
@@ -277,7 +274,26 @@ public class EntityHolder {
     }
 
     public void unifyTriplets(){
+        int i,j;
+        WordProps triplet;
+        for(i=0; i<this.wordTriplets.size(); i++){
+            triplet = this.wordTriplets.get(i);
+            if(triplet.get(0).value().equals(Globals.INTERACTION_KEYWORD) || triplet.get(0).value().equals(Globals.MOVIE_TYPE)){
+                this.wordTriplets.remove(i);
+                i--;
+            }
+        }
 
+        for(i=0; i<this.wordTriplets.size(); i++){
+            triplet = this.wordTriplets.get(i);
+            for(j= i+1; j<this.wordTriplets.size(); j++){
+                if(triplet.equals(this.wordTriplets.get(j))){
+                    triplet.consumeWordProps(this.wordTriplets.get(j));
+                    this.wordTriplets.remove(j);
+                    j--;
+                }
+            }
+        }
     }
 
     public void searchForActors(){

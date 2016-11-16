@@ -45,6 +45,7 @@ public class MainEngine {
         entityHolder.cleanDoubleDeps();
         entityHolder.markMovieAreas();
         entityHolder.makeTriplets();
+        entityHolder.unifyTriplets();
         System.out.println(entityHolder.toString());
         //entityHolder.searchForActors();
         //entityHolder.cleanupSentences();
