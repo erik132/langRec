@@ -226,11 +226,15 @@ public class EntityHolder {
                             movieProps = this.getTriplet(k,movie);
                             for(int interaction: interactions){
                                 interprops = this.getTriplet(k,interaction);
-                                if(interprops != null){
-                                    interprops.add(new WordProp(tempword.lemma, sentence.get(movie).name));
-                                    movieProps.add(new WordProp(tempword.lemma,sentence.get(interaction).name));
+                                if(interprops != null && !sentence.get(interaction).wordType.equals(Globals.INTERACTION_KEYWORD)){
+                                    if(sentence.get(interaction).wordType.equals(Globals.MOVIE_TYPE)){
+                                        interprops.add(new WordProp(tempword.lemma, sentence.get(movie).name));
+                                        movieProps.add(new WordProp(Globals.MOVIE_TYPE, sentence.get(interaction).name));
+                                    }else {
+                                        interprops.add(new WordProp(tempword.lemma, sentence.get(movie).name));
+                                        movieProps.add(new WordProp(tempword.lemma, sentence.get(interaction).name));
+                                    }
                                 }
-
                             }
                         }
                         movies.clear();
@@ -258,7 +262,6 @@ public class EntityHolder {
                 return triplet;
             }
         }
-        System.out.println("null triplet at: " + x + " " + y);
         return null;
     }
 
