@@ -3,6 +3,7 @@ package database;
 import com.sun.javafx.scene.control.GlobalMenuAdapter;
 import database.imdb.ImdbPerson;
 import database.imdb.ImdbSearcher;
+import database.triplets.WordProp;
 import database.triplets.WordProps;
 import general.Globals;
 import general.XmlHolder;
@@ -184,22 +185,85 @@ public class EntityHolder {
     }
 
     public void makeTriplets(){
-        int i;
+        int i,j,k;
         SentenceObject tempword;
+        SentenceChain sentence;
+        ChainLink tempLink;
+        WordProps movieProps;
+        WordProps interprops;
+        List<Integer> movies = new ArrayList<>();
+        List<Integer> interactions = new ArrayList<>();
 
-        for(SentenceChain sentence: this.sentences){
+        for(k=0; k<this.sentences.size(); k++){
+            sentence = this.sentences.get(k);
             for(i=0; i<sentence.size(); i++){
                 tempword = sentence.get(i);
                 if(!tempword.wordType.equals("O")){
                     if(tempword.wordType.equals(Globals.INTERACTION_KEYWORD) || tempword.wordType.equals(Globals.MOVIE_TYPE)) {
-                        this.wordTriplets.add(new WordProps(tempword.lemma, tempword.wordType));
+                        this.wordTriplets.add(new WordProps(tempword.lemma, tempword.wordType,k,i));
+
+
                     }else{
-                        this.wordTriplets.add(new WordProps(tempword.name, tempword.wordType));
+                        this.wordTriplets.add(new WordProps(tempword.name, tempword.wordType,k,i));
+                    }
+                }
+            }
+            for(i=0; i<sentence.size(); i++){
+                tempword = sentence.get(i);
+                if(!tempword.wordType.equals("O")) {
+                    if(tempword.wordType.equals(Globals.INTERACTION_KEYWORD)){
+                        for(j=0; j<sentence.linkLength(); j++){
+                            tempLink = sentence.getLink(j);
+                            if(tempLink.governorId() == i){
+                                if(sentence.get(tempLink.targetId()).wordType.equals(Globals.MOVIE)){
+                                    movies.add(tempLink.targetId());
+                                }else{
+                                    interactions.add(tempLink.targetId());
+                                }
+                            }
+                        }
+                        for(int movie: movies){
+                            movieProps = this.getTriplet(k,movie);
+                            for(int interaction: interactions){
+                                interprops = this.getTriplet(k,interaction);
+                                if(interprops != null){
+                                    interprops.add(new WordProp(tempword.lemma, sentence.get(movie).name));
+                                    movieProps.add(new WordProp(tempword.lemma,sentence.get(interaction).name));
+                                }
+
+                            }
+                        }
+                        movies.clear();
+                        interactions.clear();
+                    }
+                    if(tempword.wordType.equals(Globals.MOVIE_TYPE)){
+                        for(j=0; j<sentence.linkLength(); j++){
+                            tempLink = sentence.getLink(j);
+                            if(tempLink.governorId() == i){
+                                if(sentence.get(tempLink.targetId()).wordType.equals(Globals.MOVIE)){
+                                    this.getTriplet(k,i).add(new WordProp(Globals.MOVIE_TYPE,tempLink.governor));
+                                }
+                            }
+                        }
                     }
                 }
             }
 
         }
+    }
+
+    private WordProps getTriplet(int x, int y){
+        for(WordProps triplet: this.wordTriplets){
+            if(triplet.equals(x,y)){
+                return triplet;
+            }
+        }
+        System.out.println("null triplet at: " + x + " " + y);
+        return null;
+    }
+
+    private void attachInteractions(SentenceChain sentence, SentenceObject keyword){
+
     }
 
     public String printTriplets(){

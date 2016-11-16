@@ -11,11 +11,22 @@ import java.util.ArrayList;
 public class WordProps extends ArrayList<WordProp>{
 
     public String word;
+    public int x;
+    public int y;
 
-    public WordProps(String word, String mainType){
+    public WordProps(String word, String mainType, int x, int y){
         super();
         this.word = word;
         this.add(new WordProp(Globals.MAIN_TYPE,mainType));
+        this.x = x;
+        this.y = y;
+    }
+
+    public boolean equals(int x, int y){
+        if(this.x == x && this.y == y){
+            return true;
+        }
+        return false;
     }
 
     public String toString(){
