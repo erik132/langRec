@@ -44,6 +44,16 @@ public class WordProps extends ArrayList<WordProp>{
         return false;
     }
 
+    public String printRdf(){
+        String result = "";
+
+        for(WordProp prop: this){
+            result += "rdf('" + this.word + "','" + prop.name() + "','" + prop.value() + "').\n";
+        }
+
+        return result;
+    }
+
     public String toString(){
         String result;
 

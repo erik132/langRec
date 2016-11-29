@@ -276,6 +276,16 @@ public class EntityHolder {
         return result;
     }
 
+    public String printRdfTriplets(){
+        String result = "";
+
+        for(WordProps wordProps: this.wordTriplets){
+            result += wordProps.printRdf() + "\n";
+        }
+
+        return result;
+    }
+
     public void unifyTriplets(){
         int i,j;
         WordProps triplet;

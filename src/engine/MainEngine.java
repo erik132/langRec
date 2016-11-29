@@ -58,7 +58,7 @@ public class MainEngine {
         try {
             Writer writer = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream("outputlog.txt"), "utf-8"));
-            writer.write(entityHolder.printTriplets());
+            writer.write(entityHolder.printRdfTriplets());
             writer.close();
         }catch (Exception e){
             System.out.println("your writer is done for it m8.");

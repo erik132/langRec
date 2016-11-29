@@ -1,0 +1,56 @@
+% clear automatic strategy selection
+clear(auto).
+
+% use capital letters (A,X,T,...) as vars
+set(prolog_style_variables).
+
+% select the search strategy
+set(hyper_res). % an alternative is to use set(binary_res).
+set(factor).
+
+% select sensible amount of output
+clear(print_given). % uncomment to see input and process
+set(print_kept).  % this is important: prints all generated and kept clauses
+assign(stats_level, 0).
+
+% just make it stop after N secs
+assign(max_seconds, 10).
+
+list(sos).
+
+rdf('Interstellar','mainType','MOVIE').
+rdf('Interstellar','MOVIE_TYPE','thriller').
+rdf('Interstellar','direct','John Mueller').
+rdf('Interstellar','star','Nicolas Cage').
+
+rdf('John Mueller','mainType','PERSON').
+rdf('John Mueller','direct','Interstellar').
+rdf('John Mueller','IMDB_Writer','Jeremiah Harm').
+rdf('John Mueller','IMDB_Producer','Tu-Na House').
+rdf('John Mueller','IMDB_Self','Big Bucks: The Press Your Luck Scandal').
+rdf('John Mueller','IMDB_Actor','Shocker').
+rdf('John Mueller','IMDB_Self','Follow the Fleet: The Origins of Those Dancing Feet').
+rdf('John Mueller','IMDB_Producer','Vid Kids').
+rdf('John Mueller','IMDB_Self','John Mueller').
+rdf('John Mueller','IMDB_Miscellaneous Crew','Our World').
+rdf('John Mueller','IMDB_Self','Austin').
+rdf('John Mueller','IMDB_Actor','Trapped').
+rdf('John Mueller','IMDB_Self','The Fringe III').
+rdf('John Mueller','IMDB_Thanks','Kill Joy').
+
+rdf('Knowing','mainType','MOVIE').
+rdf('Knowing','direct','Sean Moreau').
+rdf('Knowing','star','Nicolas Cage').
+
+rdf('Sean Moreau','mainType','PERSON').
+rdf('Sean Moreau','direct','Knowing').
+
+rdf('Nicolas Cage','mainType','PERSON').
+rdf('Nicolas Cage','star','Knowing').
+rdf('Nicolas Cage','star','Interstellar').
+rdf('Nicolas Cage','IMDB_Actor','Leaving Las Vegas').
+
+-rdf('Nicolas Cage','mainType','PERSON').
+
+
+end_of_list.
