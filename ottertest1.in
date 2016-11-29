@@ -1,0 +1,33 @@
+% clear automatic strategy selection
+clear(auto).
+
+% use capital letters (A,X,T,...) as vars
+set(prolog_style_variables).
+
+% select the search strategy
+set(hyper_res). % an alternative is to use set(binary_res).
+set(factor).
+
+% select sensible amount of output
+clear(print_given). % uncomment to see input and process
+set(print_kept).  % this is important: prints all generated and kept clauses
+assign(stats_level, 0).
+
+% just make it stop after N secs
+assign(max_seconds, 10).
+
+list(sos).
+
+trail("alpha","beta").
+trail("beta","delta").
+trail("delta","sierra").
+trail("sierra","echosabre").
+
+-trail(A,B) | -trail(B,C) | trail(A,C).
+
+%-trail("alpha","sierra").
+-trail("alpha","echosabre").
+
+
+
+end_of_list.
