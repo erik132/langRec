@@ -303,7 +303,7 @@ public class EntityHolder {
         List<ImdbPerson> people = new ArrayList<>();
         int i,j;
         WordProps tempTriplet;
-        
+
         for(WordProps triplet: this.wordTriplets) {
             if(triplet.get(0).value().equals(Globals.PERSON)) {
                 people.add(new ImdbPerson(triplet.word, triplet.x, triplet.y));

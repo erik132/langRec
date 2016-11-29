@@ -6,7 +6,7 @@ import org.xml.sax.SAXException;
 import stanford.SentenceParser;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by Erik on 31.10.2016.
@@ -36,22 +36,33 @@ public class MainEngine {
             System.out.println("Stanford parser burned down");
             System.exit(4);
         }
-        xmlHolder = this.makeXmlHolder(this.outXmlFile);
-        entityHolder = new EntityHolder(xmlHolder);
-        entityHolder.readXml();
-        entityHolder.unifyNames();
-        entityHolder.associateKeywords();
-        entityHolder.associateMovieTypes();
-        entityHolder.cleanDoubleDeps();
-        entityHolder.markMovieAreas();
-        entityHolder.makeTriplets();
-        entityHolder.unifyTriplets();
-        System.out.println(entityHolder.toString());
-        entityHolder.searchForActors();
-        //entityHolder.cleanupSentences();
-        System.out.println(entityHolder.printSentences());
-        System.out.println(entityHolder.printTriplets());
 
+
+
+            xmlHolder = this.makeXmlHolder(this.outXmlFile);
+            entityHolder = new EntityHolder(xmlHolder);
+            entityHolder.readXml();
+            entityHolder.unifyNames();
+            entityHolder.associateKeywords();
+            entityHolder.associateMovieTypes();
+            entityHolder.cleanDoubleDeps();
+            entityHolder.markMovieAreas();
+            entityHolder.makeTriplets();
+            entityHolder.unifyTriplets();
+            System.out.println(entityHolder.toString());
+            entityHolder.searchForActors();
+            //entityHolder.cleanupSentences();
+            System.out.println(entityHolder.printSentences());
+            System.out.println(entityHolder.printTriplets());
+
+        try {
+            Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream("outputlog.txt"), "utf-8"));
+            writer.write(entityHolder.printTriplets());
+            writer.close();
+        }catch (Exception e){
+            System.out.println("your writer is done for it m8.");
+        }
 
 
     }
