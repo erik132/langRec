@@ -50,7 +50,11 @@ rdf('Nicolas Cage','star','Knowing').
 rdf('Nicolas Cage','star','Interstellar').
 rdf('Nicolas Cage','IMDB_Actor','Leaving Las Vegas').
 
--rdf('Nicolas Cage','mainType','PERSON').
+-rdf(X,'mainType','PERSON') | -rdf(Y,'mainType','PERSON') | -$LNE(X,Y) | people(X,Y).
+
+-people('Nicolas Cage','Sean Moreau').
+
+
 
 
 end_of_list.
