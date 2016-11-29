@@ -51,8 +51,12 @@ rdf('Nicolas Cage','star','Interstellar').
 rdf('Nicolas Cage','IMDB_Actor','Leaving Las Vegas').
 
 -rdf(X,'mainType','PERSON') | -rdf(Y,'mainType','PERSON') | -$LNE(X,Y) | people(X,Y).
+-people(X,Y) | -rdf(F,'mainType','MOVIE') | -rdf(F,R,X) | -rdf(F,T,Y) | friends(X,Y).
+-friends(X,Y) | chainfriends(X,Y).
+-chainfriends(X,Y) | -chainfriends(Y,Z) | chainfriends(X,Z).
 
--people('Nicolas Cage','Sean Moreau').
+
+-chainfriends('Sean Moreau','John Mueller').
 
 
 
