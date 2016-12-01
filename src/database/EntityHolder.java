@@ -325,7 +325,7 @@ public class EntityHolder {
         for(ImdbPerson person: people){
             tempTriplet = this.getTriplet(person.x,person.y);
             for(i=0; i<person.roles.size(); i++){
-                tempTriplet.add(new WordProp(Globals.IMDB_ROLE + "_" + person.roles.get(i),person.movies.get(i)));
+                tempTriplet.add(new WordProp(Globals.IMDB_ROLE /*+ "_" + person.roles.get(i)*/,person.movies.get(i)));
             }
 
         }

@@ -24,19 +24,22 @@ rdf('Interstellar','direct','John Mueller').
 rdf('Interstellar','star','Nicolas Cage').
 
 rdf('John Mueller','mainType','PERSON').
+rdf('Drago','mainType','PERSON').
 rdf('John Mueller','direct','Interstellar').
-rdf('John Mueller','IMDB_Writer','Jeremiah Harm').
-rdf('John Mueller','IMDB_Producer','Tu-Na House').
-rdf('John Mueller','IMDB_Self','Big Bucks: The Press Your Luck Scandal').
-rdf('John Mueller','IMDB_Actor','Shocker').
-rdf('John Mueller','IMDB_Self','Follow the Fleet: The Origins of Those Dancing Feet').
-rdf('John Mueller','IMDB_Producer','Vid Kids').
-rdf('John Mueller','IMDB_Self','John Mueller').
-rdf('John Mueller','IMDB_Miscellaneous Crew','Our World').
-rdf('John Mueller','IMDB_Self','Austin').
-rdf('John Mueller','IMDB_Actor','Trapped').
-rdf('John Mueller','IMDB_Self','The Fringe III').
-rdf('John Mueller','IMDB_Thanks','Kill Joy').
+rdf('John Mueller','IMDB','Jeremiah Harm').
+rdf('John Mueller','IMDB','Tu-Na House').
+rdf('John Mueller','IMDB','Big Bucks: The Press Your Luck Scandal').
+rdf('John Mueller','IMDB','Shocker').
+rdf('John Mueller','IMDB','Follow the Fleet: The Origins of Those Dancing Feet').
+rdf('John Mueller','IMDB','Vid Kids').
+rdf('John Mueller','IMDB','John Mueller').
+rdf('John Mueller','IMDB','Our World').
+rdf('John Mueller','IMDB','Trapped').
+rdf('John Mueller','IMDB','Austin').
+rdf('John Mueller','IMDB','The Fringe III').
+rdf('Drago','IMDB','Kill Joy').
+
+rdf('John Mueller','IMDB','Kill Joy').
 
 rdf('Knowing','mainType','MOVIE').
 rdf('Knowing','direct','Sean Moreau').
@@ -48,17 +51,16 @@ rdf('Sean Moreau','direct','Knowing').
 rdf('Nicolas Cage','mainType','PERSON').
 rdf('Nicolas Cage','star','Knowing').
 rdf('Nicolas Cage','star','Interstellar').
-rdf('Nicolas Cage','IMDB_Actor','Leaving Las Vegas').
+rdf('Nicolas Cage','IMDB','Leaving Las Vegas').
 
 -rdf(X,'mainType','PERSON') | -rdf(Y,'mainType','PERSON') | -$LNE(X,Y) | people(X,Y).
 -people(X,Y) | -rdf(F,'mainType','MOVIE') | -rdf(F,R,X) | -rdf(F,T,Y) | friends(X,Y).
+-people(X,Y) | -rdf(X,'IMDB',F) | -rdf(Y,'IMDB',F) | friends(X,Y).
 -friends(X,Y) | chainfriends(X,Y).
 -chainfriends(X,Y) | -chainfriends(Y,Z) | chainfriends(X,Z).
 
 
--chainfriends('Sean Moreau','John Mueller').
-
-
+-chainfriends('Drago','John Mueller').
 
 
 end_of_list.

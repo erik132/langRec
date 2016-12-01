@@ -21,7 +21,7 @@ public class SentenceParser {
 
     String OUT_XML = "xml2.xml";
 
-    public void parseText(String inputFile, String outputXml) throws IOException {
+    public void parseText(String inputText, String outputXml) throws IOException {
         // set up optional output files
         PrintWriter out;
         out = new PrintWriter(System.out);
@@ -47,7 +47,7 @@ public class SentenceParser {
         // Initialize an Annotation with some text to be annotated. The text is the argument to the constructor.
         Annotation annotation;
 
-        annotation = new Annotation(IOUtils.slurpFileNoExceptions(inputFile));
+        annotation = new Annotation(inputText);
 
 
         // run all the selected Annotators on this text

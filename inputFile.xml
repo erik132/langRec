@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="CoreNLP-to-HTML.xsl" type="text/xsl"?>
+<root>
+    <message>
+    Interstellar is a thriller movie and is directed by John Mueller. Knowing is directed by Sean Moreau and starring Nicolas Cage. Interstellar also stars Nicolas Cage.
+    </message>
+    <friend1>John Mueller</friend1>
+    <friend2>Sean Moreau</friend2>
+</root>

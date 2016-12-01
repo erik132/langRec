@@ -1,0 +1,33 @@
+% clear automatic strategy selection
+clear(auto).
+
+% use capital letters (A,X,T,...) as vars
+set(prolog_style_variables).
+
+% select the search strategy
+set(hyper_res). % an alternative is to use set(binary_res).
+set(factor).
+
+% select sensible amount of output
+clear(print_given). % uncomment to see input and process
+set(print_kept).  % this is important: prints all generated and kept clauses
+assign(stats_level, 0).
+
+% just make it stop after N secs
+assign(max_seconds, 10).
+
+list(sos).
+
+:::otterData:::
+
+-rdf(X,'mainType','PERSON') | -rdf(Y,'mainType','PERSON') | -$LNE(X,Y) | people(X,Y).
+-people(X,Y) | -rdf(F,'mainType','MOVIE') | -rdf(F,R,X) | -rdf(F,T,Y) | friends(X,Y).
+-people(X,Y) | -rdf(X,'IMDB',F) | -rdf(Y,'IMDB',F) | friends(X,Y).
+-friends(X,Y) | chainfriends(X,Y).
+-chainfriends(X,Y) | -chainfriends(Y,Z) | chainfriends(X,Z).
+
+
+-chainfriends(':::friend1:::',':::friend2:::').
+
+
+end_of_list.

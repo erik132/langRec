@@ -2,9 +2,12 @@ package engine;
 
 import database.EntityHolder;
 import general.XmlHolder;
+import general.XmlHolderInput;
 import org.xml.sax.SAXException;
 import stanford.SentenceParser;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 
@@ -17,7 +20,9 @@ public class MainEngine {
     private String outXmlFile;
     private EntityHolder entityHolder;
 
-
+    private String inputText;
+    private String friend1;
+    private String friend2;
 
     public MainEngine(String inputFile, String outXmlFile){
         this.inputFile = inputFile;
@@ -29,8 +34,10 @@ public class MainEngine {
         SentenceParser stp = new SentenceParser();
         XmlHolder xmlHolder;
 
+        this.readInputFile(this.inputFile);
+
         try {
-            stp.parseText(this.inputFile,this.outXmlFile);
+            stp.parseText(this.inputText,this.outXmlFile);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Stanford parser burned down");
@@ -39,25 +46,25 @@ public class MainEngine {
 
 
 
-            xmlHolder = this.makeXmlHolder(this.outXmlFile);
-            entityHolder = new EntityHolder(xmlHolder);
-            entityHolder.readXml();
-            entityHolder.unifyNames();
-            entityHolder.associateKeywords();
-            entityHolder.associateMovieTypes();
-            entityHolder.cleanDoubleDeps();
-            entityHolder.markMovieAreas();
-            entityHolder.makeTriplets();
-            entityHolder.unifyTriplets();
-            System.out.println(entityHolder.toString());
-            entityHolder.searchForActors();
-            //entityHolder.cleanupSentences();
-            System.out.println(entityHolder.printSentences());
-            System.out.println(entityHolder.printTriplets());
+        xmlHolder = this.makeXmlHolder(this.outXmlFile);
+        entityHolder = new EntityHolder(xmlHolder);
+        entityHolder.readXml();
+        entityHolder.unifyNames();
+        entityHolder.associateKeywords();
+        entityHolder.associateMovieTypes();
+        entityHolder.cleanDoubleDeps();
+        entityHolder.markMovieAreas();
+        entityHolder.makeTriplets();
+        entityHolder.unifyTriplets();
+        System.out.println(entityHolder.toString());
+        //entityHolder.searchForActors();
+        //entityHolder.cleanupSentences();
+        System.out.println(entityHolder.printSentences());
+        System.out.println(entityHolder.printTriplets());
 
         try {
             Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream("outputlog.txt"), "utf-8"));
+                    new FileOutputStream("otterinput.txt"), "utf-8"));
             writer.write(entityHolder.printRdfTriplets());
             writer.close();
         }catch (Exception e){
@@ -86,6 +93,31 @@ public class MainEngine {
         }
 
         return xmlHolder;
+    }
+
+    protected void readInputFile(String xmlFile){
+        XmlHolderInput xmlHolder = null;
+        try {
+
+            xmlHolder = new XmlHolderInput(xmlFile);
+            this.inputText = xmlHolder.getMsg();
+            this.friend1 = xmlHolder.getFriend1();
+            this.friend2 = xmlHolder.getFriend2();
+
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+            System.out.println("xml parser configuration broken");
+            System.exit(1);
+        } catch (SAXException e) {
+            e.printStackTrace();
+            System.out.println("xml SAX exception. Wait what?");
+            System.exit(2);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("xmlHolder IO excpetion. You do have the file right?");
+            System.exit(3);
+        }
+
     }
 
 }
