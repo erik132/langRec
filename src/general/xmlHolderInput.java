@@ -28,17 +28,17 @@ public class XmlHolderInput {
     }
 
     public String getMsg(){
-        return this.getElement("message");
+        return this.getElement(Globals.INPUT_MESSAGE);
     }
 
     public String getFriend1(){
 
-        return this.getElement("friend1");
+        return this.getElement(Globals.INPUT_FRIEND1);
     }
 
     public String getFriend2(){
 
-        return this.getElement("friend2");
+        return this.getElement(Globals.INPUT_FRIEND2);
     }
 
     protected String getElement(String elemName){

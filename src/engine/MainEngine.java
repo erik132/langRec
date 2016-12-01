@@ -1,6 +1,7 @@
 package engine;
 
 import database.EntityHolder;
+import general.Globals;
 import general.XmlHolder;
 import general.XmlHolderInput;
 import org.xml.sax.SAXException;
@@ -65,7 +66,7 @@ public class MainEngine {
         try {
             Writer writer = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream("otterinput.txt"), "utf-8"));
-            writer.write(entityHolder.printRdfTriplets());
+            writer.write(this.produceOtterInput(entityHolder.printRdfTriplets()));
             writer.close();
         }catch (Exception e){
             System.out.println("your writer is done for it m8.");
@@ -119,5 +120,39 @@ public class MainEngine {
         }
 
     }
+
+    protected String produceOtterInput(String rdfData){
+        String template = this.getOtterTemplate();
+
+        template = template.replace(Globals.TEMPLATE_DATA,rdfData);
+        template = template.replace(Globals.TEMPLATE_FRIEND1,this.friend1);
+        template = template.replace(Globals.TEMPLATE_FRIEND2,this.friend2);
+
+        return template;
+    }
+
+    protected String getOtterTemplate(){
+        String result = "";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(Globals.OTTER_TEMPLATE));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            result = sb.toString();
+
+            br.close();
+        }catch(Exception e){
+            System.out.println("otter template could not be read");
+            System.exit(4);
+        }
+        return result;
+    }
+
 
 }

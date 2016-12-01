@@ -30,4 +30,14 @@ public class Globals {
     public static final String IMDB_ROLE = "IMDB";
 
     public static final String MAIN_TYPE = "mainType";
+
+    public static final String INPUT_MESSAGE = "message";
+    public static final String INPUT_FRIEND1 = "friend1";
+    public static final String INPUT_FRIEND2 = "friend2";
+
+    public static final String TEMPLATE_DATA = ":::otterData:::";
+    public static final String TEMPLATE_FRIEND1 = ":::friend1:::";
+    public static final String TEMPLATE_FRIEND2 = ":::friend2:::";
+
+    public static final String OTTER_TEMPLATE = "otterTemplate.txt";
 }
