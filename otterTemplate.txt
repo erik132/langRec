@@ -26,8 +26,11 @@ list(sos).
 -friends(X,Y) | chainfriends(X,Y).
 -chainfriends(X,Y) | -chainfriends(Y,Z) | chainfriends(X,Z).
 
+-friends(X,Y) | -rdf(X,'direct',F) | -rdf(Y,R,F) | -$LNE(R,'direct') | boss(X,Y).
 
--chainfriends(':::friend1:::',':::friend2:::').
+%-chainfriends(':::friend1:::',':::friend2:::').
+
+-boss(':::friend1:::',':::friend2:::').
 
 
 end_of_list.
