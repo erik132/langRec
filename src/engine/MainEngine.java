@@ -25,6 +25,13 @@ public class MainEngine {
     private String friend1;
     private String friend2;
 
+    private String boss1;
+    private String employee1;
+    private String movie1;
+    private String movieType1;
+    private String person1;
+    private String personType1;
+
     public MainEngine(String inputFile, String outXmlFile){
         this.inputFile = inputFile;
         this.outXmlFile = outXmlFile;
@@ -105,6 +112,13 @@ public class MainEngine {
             this.friend1 = xmlHolder.getFriend1();
             this.friend2 = xmlHolder.getFriend2();
 
+            this.boss1 = xmlHolder.getBoss();
+            this.employee1 = xmlHolder.getEmployee();
+            this.movie1 = xmlHolder.getMovie1();
+            this.movieType1 = xmlHolder.getMovieType1();
+            this.person1 = xmlHolder.getPerson1();
+            this.personType1 = xmlHolder.getPersonType1();
+
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
             System.out.println("xml parser configuration broken");
@@ -127,6 +141,13 @@ public class MainEngine {
         template = template.replace(Globals.TEMPLATE_DATA,rdfData);
         template = template.replace(Globals.TEMPLATE_FRIEND1,this.friend1);
         template = template.replace(Globals.TEMPLATE_FRIEND2,this.friend2);
+
+        template = template.replace(Globals.TEMPLATE_BOSS1,this.boss1);
+        template = template.replace(Globals.TEMPLATE_EMPLOYEE1,this.employee1);
+        template = template.replace(Globals.TEMPLATE_MOVIE1,this.movie1);
+        template = template.replace(Globals.TEMPLATE_MOVIE_TYPE1,this.movieType1);
+        template = template.replace(Globals.TEMPLATE_PERSON1,this.person1);
+        template = template.replace(Globals.TEMPLATE_PERSON_TYPE1,this.personType1);
 
         return template;
     }

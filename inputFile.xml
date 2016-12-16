@@ -6,4 +6,13 @@
     </message>
     <friend1>John Mueller</friend1>
     <friend2>Sean Moreau</friend2>
+
+    <boss1>John Mueller</boss1>
+    <employee1>Nicolas Cage</employee1>
+
+    <movie1>Interstellar</movie1>
+    <movieType1>thriller</movieType1>
+
+    <person1>Sean Moreau</person1>
+    <personType1>direct</personType1>
 </root>

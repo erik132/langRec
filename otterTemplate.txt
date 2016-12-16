@@ -27,10 +27,13 @@ list(sos).
 -chainfriends(X,Y) | -chainfriends(Y,Z) | chainfriends(X,Z).
 
 -friends(X,Y) | -rdf(X,'direct',F) | -rdf(Y,R,F) | -$LNE(R,'direct') | boss(X,Y).
+-rdf(X,'mainType','MOVIE') | -rdf(X,'MOVIE_TYPE',Y) | movieType(X,Y).
+-rdf(X,'mainType','PERSON') | -rdf(X,R,Y) | -rdf(Y,'mainType','MOVIE') | personType(X,R).
 
-%-chainfriends(':::friend1:::',':::friend2:::').
+-chainfriends(':::friend1:::',':::friend2:::').
 
--boss(':::friend1:::',':::friend2:::').
-
+-boss(':::boss1:::',':::employee1:::').
+-movieType(':::movie1:::',':::movieType1:::').
+-personType(':::person1:::',':::personType1:::').
 
 end_of_list.

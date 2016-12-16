@@ -35,9 +35,27 @@ public class Globals {
     public static final String INPUT_FRIEND1 = "friend1";
     public static final String INPUT_FRIEND2 = "friend2";
 
+    public static final String INPUT_BOSS1 = "boss1";
+    public static final String INPUT_EMPLOYEE1 = "employee1";
+
+    public static final String INPUT_MOVIE1 = "movie1";
+    public static final String INPUT_MOVIE_TYPE1 = "movieType1";
+
+    public static final String INPUT_PERSON1 = "person1";
+    public static final String INPUT_PERSON_TYPE1 = "personType1";
+
     public static final String TEMPLATE_DATA = ":::otterData:::";
     public static final String TEMPLATE_FRIEND1 = ":::friend1:::";
     public static final String TEMPLATE_FRIEND2 = ":::friend2:::";
+
+    public static final String TEMPLATE_BOSS1 = ":::boss1:::";
+    public static final String TEMPLATE_EMPLOYEE1 = ":::employee1:::";
+
+    public static final String TEMPLATE_MOVIE1 = ":::movie1:::";
+    public static final String TEMPLATE_MOVIE_TYPE1 = ":::movieType1:::";
+
+    public static final String TEMPLATE_PERSON1 = ":::person1:::";
+    public static final String TEMPLATE_PERSON_TYPE1 = ":::personType1:::";
 
     public static final String OTTER_TEMPLATE = "otterTemplate.txt";
 }
