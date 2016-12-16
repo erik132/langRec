@@ -41,6 +41,36 @@ public class XmlHolderInput {
         return this.getElement(Globals.INPUT_FRIEND2);
     }
 
+    public String getBoss(){
+
+        return this.getElement(Globals.INPUT_BOSS1);
+    }
+
+    public String getEmployee(){
+
+        return this.getElement(Globals.INPUT_EMPLOYEE1);
+    }
+
+    public String getMovie1(){
+
+        return this.getElement(Globals.INPUT_MOVIE1);
+    }
+
+    public String getMovieType1(){
+
+        return this.getElement(Globals.INPUT_MOVIE_TYPE1);
+    }
+
+    public String getPerson1(){
+
+        return this.getElement(Globals.INPUT_PERSON1);
+    }
+
+    public String getPersonType1(){
+
+        return this.getElement(Globals.INPUT_PERSON_TYPE1);
+    }
+
     protected String getElement(String elemName){
         int i;
         NodeList nodes = this.xmlDoc.getElementsByTagName(elemName);
